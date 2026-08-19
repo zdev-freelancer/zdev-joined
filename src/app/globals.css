@@ -1,0 +1,68 @@
+@import '../styles/tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Brand-consistent selection: cream on base, no external hue. */
+  ::selection {
+    background: rgb(var(--color-fg-rgb) / 0.9);
+    color: var(--color-bg);
+  }
+
+  /* Visible, keyboard-only focus ring (prompt §9 — accessibility). */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* On inverse (cream) surfaces the ring must flip to stay visible. */
+  [data-surface='inverse'] :focus-visible {
+    outline-color: var(--ring-inverse);
+  }
+}
+
+@layer utilities {
+  /* Fades a scrolling row out at both edges (value-proposition marquee). */
+  .mask-x-fade {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 12%,
+      #000 88%,
+      transparent
+    );
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+}
+
+/*
+ * Global reduced-motion contract (prompt §7 / §10). Movement collapses to a
+ * short fade; the useReducedMotion hook mirrors this for Framer Motion so JS
+ * and CSS never disagree.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

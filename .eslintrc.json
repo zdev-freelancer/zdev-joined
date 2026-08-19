@@ -1,0 +1,50 @@
+{
+  "root": true,
+  "extends": ["next/core-web-vitals", "prettier"],
+  "plugins": ["import"],
+  "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": ["../../*", "../../../*", "../../../../*"],
+            "message": "Deep relative imports are banned (prompt §6.2). Use the @/features, @/shared, or @/config aliases."
+          }
+        ]
+      }
+    ],
+    "import/no-restricted-paths": [
+      "error",
+      {
+        "zones": [
+          {
+            "target": "./src/shared",
+            "from": "./src/features",
+            "message": "Dependency inversion (prompt §6.3-D): shared/ is transversal and must never import a domain feature."
+          },
+          {
+            "target": "./src/shared",
+            "from": "./src/app",
+            "message": "shared/ must not depend on the routing layer (app/)."
+          },
+          {
+            "target": "./src/config",
+            "from": ["./src/features", "./src/shared", "./src/app"],
+            "message": "config/ is a leaf: it must not import from features/, shared/, or app/."
+          },
+          {
+            "target": "./src/features/navbar",
+            "from": ["./src/features/hero", "./src/features/value-proposition", "./src/features/feature-showcase", "./src/features/editorial-split", "./src/features/social-proof", "./src/features/newsletter-cta", "./src/features/footer"],
+            "message": "Cross-feature imports are banned (Screaming Architecture). Share code via @/shared."
+          },
+          {
+            "target": "./src/features/hero",
+            "from": ["./src/features/navbar", "./src/features/value-proposition", "./src/features/feature-showcase", "./src/features/editorial-split", "./src/features/social-proof", "./src/features/newsletter-cta", "./src/features/footer"],
+            "message": "Cross-feature imports are banned (Screaming Architecture). Share code via @/shared."
+          }
+        ]
+      }
+    ]
+  }
+}

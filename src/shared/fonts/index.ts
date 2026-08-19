@@ -1,0 +1,1 @@
+export { switzer } from './fonts';

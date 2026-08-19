@@ -1,0 +1,1 @@
+export { useHeroReveal } from './useHeroReveal';

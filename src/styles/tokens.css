@@ -1,0 +1,38 @@
+/*
+ * Joined — Design Tokens (single source of truth for color)
+ * ---------------------------------------------------------
+ * Every value here is derived STRICTLY from the logo (prompt §3):
+ *   - Base black-blue and cream are pixel-sampled from the wordmark.
+ *   - Elevated / muted / border are interpolations between those two anchors,
+ *     never an external hue (prompt §11).
+ *
+ * Colors are exposed as space-separated RGB channels so Tailwind can apply
+ * <alpha-value> and any opacity utility resolves from the same token.
+ */
+:root {
+  /* --- Anchor colors (sampled from logo) --- */
+  --color-bg: #0a0d16; /* base black-blue background */
+  --color-bg-rgb: 10 13 22;
+
+  --color-fg: #fef1e1; /* cream — wordmark / primary text */
+  --color-fg-rgb: 254 241 225;
+
+  /* --- Derived surfaces (interpolation only) --- */
+  /* +7% white over base — navbar-on-scroll, cards, elevated surfaces (§3.1). */
+  --color-bg-elevated: #1b1e26;
+  --color-bg-elevated-rgb: 27 30 38;
+
+  /* Cream at reduced opacity — secondary text & hairline borders (§3.1). */
+  --color-fg-muted: rgb(254 241 225 / 0.66);
+  --color-border: rgb(254 241 225 / 0.12);
+
+  /* --- Inverse (cream sections / buttons) --- */
+  --color-inverse-bg: #fef1e1;
+  --color-inverse-fg: #0a0d16;
+
+  /* --- Focus ring --- */
+  --ring: rgb(254 241 225 / 0.7);
+  --ring-inverse: rgb(10 13 22 / 0.6);
+
+  color-scheme: dark;
+}
